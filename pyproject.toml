@@ -3,6 +3,33 @@ name = "vivimos-agent-service"
 version = "0.1.0"
 description = "RAG service for water/EPA compliance documents"
 requires-python = ">=3.12"
+dependencies = [
+    "fastapi==0.104.1",
+    "uvicorn==0.24.0",
+    "pydantic==2.5.0",
+    "pydantic-settings==2.1.0",
+    "sqlalchemy==2.0.23",
+    "psycopg2-binary==2.9.9",
+    "pgvector==0.2.4",
+    "python-dotenv==1.0.0",
+    "anthropic==0.7.1",
+    "openai==1.3.9",
+    "PyPDF2==3.0.1",
+    "pdfplumber==0.10.3",
+    "pytesseract==0.3.10",
+    "Pillow==10.1.0",
+    "python-multipart==0.0.6",
+    "requests==2.31.0",
+]
+
+[dependency-groups]
+dev = [
+    "pytest==8.3.3",
+    "httpx==0.27.2",  # starlette 0.27 TestClient breaks on httpx>=0.28
+]
+
+[tool.uv]
+package = false  # an app, not a library to publish
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

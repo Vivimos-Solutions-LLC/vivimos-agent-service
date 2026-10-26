@@ -32,18 +32,13 @@ PDF upload ─▶ pdfplumber extraction ─▶ overlapping text chunking
 
 ## Setup
 
-### 1. Create virtual environment
+### 1. Install dependencies
+Dependencies are managed with [uv](https://docs.astral.sh/uv/) (`pyproject.toml` + `uv.lock`).
 ```bash
-python3 -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
+uv sync  # creates .venv and installs app + dev dependencies
 ```
 
-### 2. Install dependencies
-```bash
-pip install -r requirements.txt
-```
-
-### 3. Configure environment
+### 2. Configure environment
 ```bash
 cp .env.example .env
 # Edit .env with your actual values:
@@ -52,13 +47,15 @@ cp .env.example .env
 # - OPENAI_API_KEY
 ```
 
-### 4. Test startup
+### 3. Run tests
 ```bash
-# Run the test
-python test_startup.py
+uv run pytest                 # fast tests: validation + error paths, no API calls
+uv run pytest -m integration  # end-to-end RAG against Postgres + OpenAI (needs SAMPLE_PDF)
+```
 
-# Or start the server
-python -m main
+### 4. Start the server
+```bash
+uv run uvicorn main:app --reload
 ```
 
 Server runs at `http://localhost:8000`
