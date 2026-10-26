@@ -1,0 +1,13 @@
+[project]
+name = "vivimos-agent-service"
+version = "0.1.0"
+description = "RAG service for water/EPA compliance documents"
+requires-python = ">=3.12"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = [
+    "integration: hits Postgres and the OpenAI API (costs money, slower)",
+]
+# Integration tests are skipped by default; run them with: pytest -m integration
+addopts = '-m "not integration"'

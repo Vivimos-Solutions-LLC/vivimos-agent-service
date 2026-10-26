@@ -1,5 +1,7 @@
 """Orchestrate the full PDF ingestion pipeline."""
 
+from uuid import uuid4
+
 from sqlalchemy.orm import Session
 from models import Document, Embedding
 from .pdf_extractor import extract_text_from_pdf
@@ -22,7 +24,7 @@ def ingest_document(db: Session, filename: str, file_bytes: bytes) -> Document:
     # 1. Create document record
     document = Document(
         filename=filename,
-        s3_key=filename,  # placeholder until S3 is wired up
+        s3_key=f"{uuid4()}/{filename}",  # placeholder until S3 is wired up; unique per upload
         file_size=len(file_bytes),
     )
     db.add(document)

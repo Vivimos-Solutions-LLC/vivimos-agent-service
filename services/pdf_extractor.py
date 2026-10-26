@@ -19,5 +19,6 @@ def extract_text_from_pdf(file_bytes: bytes) -> List[str]:
     with pdfplumber.open(io.BytesIO(file_bytes)) as pdf:
         for page in pdf.pages:
             text = page.extract_text() or ""
-            pages.append(text.strip())
+            # Postgres text columns reject NUL bytes, which some PDFs emit
+            pages.append(text.replace("\x00", "").strip())
     return pages
